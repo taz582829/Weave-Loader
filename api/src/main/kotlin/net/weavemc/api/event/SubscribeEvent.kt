@@ -9,4 +9,6 @@ package net.weavemc.api.event
  */
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER)
-public annotation class SubscribeEvent
+public annotation class SubscribeEvent(
+    val priority: Priority = Priority.NORMAL
+)

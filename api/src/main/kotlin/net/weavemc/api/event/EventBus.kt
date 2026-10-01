@@ -23,10 +23,11 @@ public object EventBus {
      * @see SubscribeEvent
      */
     @JvmStatic
-    public fun subscribe(obj: Any) {
+    fun subscribe(obj: Any) {
         generateSequence(obj.javaClass) { it.superclass }.toList().forEach { currentClass ->
             currentClass.declaredMethods
                 .filter { it.isAnnotationPresent(SubscribeEvent::class.java) && it.parameterCount == 1 }
+                .sortedByDescending { it.getAnnotation<SubscribeEvent>(SubscribeEvent::class::java).priority.value }
                 .forEach { getListeners(it.parameterTypes.first()) += ReflectEventConsumer(obj, it) }
         }
     }
